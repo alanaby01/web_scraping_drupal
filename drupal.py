@@ -2,18 +2,20 @@
 from unicodedata import name
 from bs4 import BeautifulSoup
 import urllib.request
-project_url_list = []
-profile_url_list = []
+quote_page = 'https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=&solrsort=iss_project_release_usage%20desc&op=Search'
 count = 0
 while(count<=1000):
-    quote_page = 'https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=&solrsort=iss_project_release_usage%20desc&op=Search'
+    project_url_list = []
+    profile_url_list = []
+    project_name_list = []
     weburl = urllib.request.urlopen(quote_page)
     soup = BeautifulSoup(weburl, 'html.parser')
     project_box = soup.findAll('div', attrs={'class': 'node'})
     for name in project_box:
         project_url_list.append("https://www.drupal.org"+ name.find('h2').find('a').get('href'))
+        project_name_list.append(name.find('h2').find('a').text)
     #project page
-
+    
     for project_url in project_url_list:
         projecturl = urllib.request.urlopen(project_url)
         soup2 = BeautifulSoup(projecturl, 'html.parser')
