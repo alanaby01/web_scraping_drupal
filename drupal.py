@@ -23,7 +23,7 @@ while(project_count<=300):
     
     for project_url in project_url_list:
         project_count = project_count + 1
-        if(project_count >=300):
+        if(project_count >=301):
             break
         projecturl = urllib.request.urlopen(project_url)
         soup2 = BeautifulSoup(projecturl, 'html.parser')
